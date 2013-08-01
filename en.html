@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+<meta name="keyword" content="Pokemon,damage,damage calculation,Pokemon Black,Pokemon White,Pokemon X,Pokemon Y">
+<title>Critical Hit - Competitive Pokemon Tool</title>
+<!-- Bootstrap -->
+<script src="./js/jquery.min.js" type="text/javascript"></script>
+<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="./bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+<script src="./bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Critical Hit -->
+<script charset="UTF-8" src="./js/pokemonData.js" type="text/javascript"></script>
+<script charset="UTF-8" src="./js/importPOParty.js" type="text/javascript"></script>
+<script charset="UTF-8" src="./js/moveData.js" type="text/javascript"></script>
+<script charset="UTF-8" src="./js/miscData.js" type="text/javascript"></script>
+<script charset="UTF-8" src="./js/calculateDamage.js" type="text/javascript"></script>
+<script charset="UTF-8" src="./js/ui.js" type="text/javascript"></script>
+<script charset="UTF-8" src="./js/lang/createResultHTMLEn.js" type="text/javascript"></script>
+<script charset="UTF-8" src="./js/lang/textDataEn.js" type="text/javascript"></script>
+<link href="./css/ui.css" rel="stylesheet">
+<link rel="shortcut icon" href="favicon.ico"></head>
+
+<body>
+  <div class="navbar navbar-inverse navbar-static-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="brand" href="./en.html">Critical Hit β</a>
+        <ul class="nav">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Languages</a>
+            <ul class="dropdown-menu">
+              <li><a href="./en.html">English</a></li>
+              <li><a href="./index.html">日本語</a></li>
+            </ul>
+          </li>
+          <li><a href="./instructionsEn.html">Help</a></li>
+          <li><a href="../indexEn.html">Home</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="inputDiv" align="center">
+      <form name="calc" method="post" onSubmit="submitForm(); return false;">
+      <input type="submit" value="Enter" style="visibility:hidden">
+      <table border="0">
+        <tr>
+          <td>
+            <div class="pagination">
+              <ul>
+                <li><a id="side0poke0" onClick="focusOnPoke(0,0)" tabindex="1"><img src="./image/pokeball.png" id="side0poke0icon"></a></li>
+                <script type="text/javascript"><!--
+                for(var i=1;i<6;i++){
+                  var id = "side0poke" + i;
+                  var iconId = id + 'icon';
+                  document.write('<li><a id="' + id + '" onClick="focusOnPoke(0,' + i + ')"><img src="./image/pokeball.png" id=' + iconId + '></a></li>');
+                }
+                --></script>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="powerButton" onClick="toggleStats(0);return false;" onMouseOver="this.className='powerButtonHover'" onMouseOut="this.className='powerButton'"><img src="./image/powerweight.png" style="margin-top:5px"></div>
+          </td>
+        </tr>
+      </table>
+      <div class="sideContainer" id="side0container">
+        <div id="side0name" onClick="focusOnPoke(0,focusingPoke[0]);">
+          <!-- The tabindex attribute is set to prevent focusing on the URL bar when pressing Shift+Tab on the upper Pokemon-name input form. -->
+          <input type="text" class="span2" data-provide="typeahead" id="side0nametext" size="10" maxlength="12" autocomplete="off" onFocus="focusOnSide(0);focusingStatSide=0;" onBlur="focusingStatSide=-1;" onKeyDown="captureTab(0,event.keyCode,event.shiftKey)" placeholder="Pokemon Name" tabindex="2">
+        </div>
+        <!-- side0stats -->
+        <div>
+          <table border="0">
+            <tr>
+              <td>
+                <table border="0">
+                  <tr>
+                    <td>
+                      <div class="labelContainer">
+                        Nat:
+                      </div>
+                    </td>
+                    <td>           
+                      <div class="dropdown">
+                        <input type="text" class="dropdown-toggle" data-toggle="dropdown" href="#" placeholder="No Bias" style="width: 110px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=0;" onBlur="focusingStatSide=-1;" id="side0naturetext" autocomplete="off">
+                          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                            <li><a tabindex="-1" href="javascript:chooseNature(0,30);"><span class="badge badge-important">+</span> + Increase</a></li>
+                            <li><a tabindex="-1" href="javascript:chooseNature(0,31);"><span class="badge badge-info">−</span> - Decrease</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-submenu">
+                              <a tabindex="-1" href="javascript:chooseNature(0,25);"><span class="badge Aup">A+</span> Atk Increase</a>
+                              <ul class="dropdown-menu">
+                                <script type="text/javascript"><!--
+                                for(var i=0; i<=4; i++){
+                                  document.write('<li><a tabindex="-1" href="javascript:chooseNature(0,' + i + ');"><span class="badge ' + statNames[i%5+1] + 'down">' + statNames[i%5+1] + '-</span> ' + natureNames[i] + '</a></li>');                                
+                                }
+                                --></script>
+                              </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                              <a tabindex="-1" href="javascript:chooseNature(0,26);"><span class="badge Bup">B+</span> Def Increase</a>
+                              <ul class="dropdown-menu">
+                                <script type="text/javascript"><!--
+                                for(var i=5; i<=9; i++){
+                                  document.write('<li><a tabindex="-1" href="javascript:chooseNature(0,' + i + ');"><span class="badge ' + statNames[i%5+1] + 'down">' + statNames[i%5+1] + '-</span> ' + natureNames[i] + '</a></li>');                                
+                                }
+                                --></script>
+                              </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                              <a tabindex="-1" href="javascript:chooseNature(0,27);"><span class="badge Cup">C+</span> SAtk Increase</a>
+                              <ul class="dropdown-menu">
+                                <script type="text/javascript"><!--
+                                for(var i=10; i<=14; i++){
+                                  document.write('<li><a tabindex="-1" href="javascript:chooseNature(0,' + i + ');"><span class="badge ' + statNames[i%5+1] + 'down">' + statNames[i%5+1] + '-</span> ' + natureNames[i] + '</a></li>');                                
+                                }
+                                --></script>
+                              </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                              <a tabindex="-1" href="javascript:chooseNature(0,28);"><span class="badge Dup">D+</span> SDef Increase</a>
+                              <ul class="dropdown-menu">
+                                <script type="text/javascript"><!--
+                                for(var i=15; i<=19; i++){
+                                  document.write('<li><a tabindex="-1" href="javascript:chooseNature(0,' + i + ');"><span class="badge ' + statNames[i%5+1] + 'down">' + statNames[i%5+1] + '-</span> ' + natureNames[i] + '</a></li>');                                
+                                }
+                                --></script>
+                              </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                              <a tabindex="-1" href="javascript:chooseNature(0,29);"><span class="badge Sup">S+</span> Spd Boost</a>
+                              <ul class="dropdown-menu">
+                                <script type="text/javascript"><!--
+                                for(var i=20; i<=24; i++){
+                                  document.write('<li><a tabindex="-1" href="javascript:chooseNature(0,' + i + ');"><span class="badge ' + statNames[i%5+1] + 'down">' + statNames[i%5+1] + '-</span> ' + natureNames[i] + '</a></li>');                                
+                                }
+                                --></script>
+                              </ul>
+                            </li>
+                          </ul>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="labelContainer">
+                        Abl:
+                      </div>
+                    </td>
+                    <td>
+                      <div class="dropdown">
+                        <input type="text" class="dropdown-toggle" data-toggle="dropdown" href="#" placeholder="None" style="width: 110px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=0;" onBlur="focusingStatSide=-1;" id="side0abilitytext" autocomplete="off">
+                          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                            <li><a tabindex="-1" href="javascript:chooseAbility(0,0);"><span class="badge badge-important">1</span> <span id="side0ability0">MissingNo</span></a></li>
+                            <li><a tabindex="-1" href="javascript:chooseAbility(0,1);"><span class="badge badge-warning">2</span> <span id="side0ability1">MissingNo</span></a></li>
+                            <li><a tabindex="-1" href="javascript:chooseAbility(0,2);"><span class="badge badge-inverse">H</span> <span id="side0ability2">MissingNo</span></a></li>
+                          </ul>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="labelContainer">
+                        Item:
+                      </div>
+                    </td>
+                    <td>
+                      <div class="dropdown">
+                        <input type="text" class="dropdown-toggle" data-toggle="dropdown" href="#" placeholder="None" style="width: 110px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=0;" onBlur="focusingStatSide=-1;" id="side0itemtext" autocomplete="off">
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                          <li class="dropdown-submenu">
+                            <a tabindex="-1" href="javascript:chooseItem(0,1);">Attack Boost Gems</a>
+                            <ul class="dropdown-menu">
+                              <script type="text/javascript"><!--
+                              for(var i=0; i<typeNames.length-2; i++){
+                                document.write('<li><a tabindex="-1" href="javascript:chooseItem(0,' + (23+i) + ');">' + typeNames[i] + '</a></li>');
+                              }
+                              --></script>
+                            </ul>
+                          </li>
+                          <li class="dropdown-submenu">
+                            <a tabindex="-1" href="javascript:chooseItem(0,0);">Attack Boost Plates</a>
+                            <ul class="dropdown-menu">
+                              <script type="text/javascript"><!--
+                              for(var i=1; i<typeNames.length-2; i++){
+                                document.write('<li><a tabindex="-1" href="javascript:chooseItem(0,' + (40+i) + ');">' + typeNames[i] + '</a></li>');
+                              }
+                              --></script>
+                            </ul>
+                          </li>
+                          <li class="divider"></li>
+                          <li class="dropdown-submenu">
+                            <a tabindex="-1" href="javascript:chooseItem(0,15);">Damage Reduction Berries</a>
+                            <ul class="dropdown-menu">
+                              <script type="text/javascript"><!--
+                              for(var i=1; i<typeNames.length-2; i++){
+                                document.write('<li><a tabindex="-1" href="javascript:chooseItem(0,' + (58+i) + ');">' + typeNames[i] + '</a></li>');
+                              }
+                              --></script>
+                            </ul>
+                          </li>
+                          <li><a tabindex="-1" href="javascript:chooseItem(0,16)">Eviolite<small>(*active on all)</small></a></li>
+                          <li><a tabindex="-1" href="javascript:chooseItem(0,8);">Special Item<small>(*ex. Sowl Dew)</small></a></li>
+                          <li class="divider"></li>
+                          <script type="text/javascript"><!--
+                          for(var i=2; i<=7; i++){
+                            document.write('<li><a tabindex="-1" href="javascript:chooseItem(0,' + i + ');">' + itemNames[i] + '</a></li>');
+                          }
+                          --></script>
+                          <li class="dropdown-submenu">
+                            <a tabindex="-1" href="javascript:chooseItem(0,76);">Metronome</a>
+                            <ul class="dropdown-menu">
+                              <script type="text/javascript"><!--
+                              for(var i=0; i<=5; i++){
+                                document.write('<li><a tabindex="-1" href="javascript:chooseItem(0,' + (76+i) + ');">' + i + (i==5 ? '+' : '') + '</a></li>');
+                              }
+                              --></script>
+                            </ul>
+                          </li>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td width="10px" align="center">
+                <br>
+              </td>
+              <td>
+  <!--               <div id="side0stats" class="pokemonDetailsContainer"> -->
+                <div>
+                  <table border="0">
+                    <tr>
+                      <td>
+                        <input type="text" id="side0iv0" style="width:28px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=0;" onBlur="focusingStatSide=-1;" maxlength="2" placeholder="H" value="31" autocomplete="off">
+                      </td>
+                      <td>
+                        <input type="text" id="side0iv1" style="width:28px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=0;" onBlur="focusingStatSide=-1;" maxlength="2" placeholder="A" value="31" autocomplete="off">
+                      </td>
+                      <td>
+                        <input type="text" id="side0iv2" style="width:28px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=0;" onBlur="focusingStatSide=-1;" maxlength="2" placeholder="B" value="31" autocomplete="off">
+                      </td>
+                      <td>
+                        <input type="text" id="side0iv3" style="width:28px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=0;" onBlur="focusingStatSide=-1;" maxlength="2" placeholder="C" value="31" autocomplete="off">
+                      </td>
+                      <td>
+                        <input type="text" id="side0iv4" style="width:28px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=0;" onBlur="focusingStatSide=-1;" maxlength="2" placeholder="D" value="31" autocomplete="off">
+                      </td>
+                      <td>
+                        <input type="text" id="side0iv5" style="width:28px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=0;" onBlur="focusingStatSide=-1;" maxlength="2" placeholder="S" value="31" autocomplete="off">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <input type="text" id="side0ev0" style="width:28px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=0;" onBlur="focusingStatSide=-1;" maxlength="3" placeholder="H" autocomplete="off">
+                      </td>
+                      <td>
+                        <input type="text" id="side0ev1" style="width:28px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=0;" onBlur="focusingStatSide=-1;" maxlength="3" placeholder="A" autocomplete="off" autocomplete="off">
+                      </td>
+                      <td>
+                        <input type="text" id="side0ev2" style="width:28px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=0;" onBlur="focusingStatSide=-1;" maxlength="3" placeholder="B" autocomplete="off" autocomplete="off">
+                      </td>
+                      <td>
+                        <input type="text" id="side0ev3" style="width:28px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=0;" onBlur="focusingStatSide=-1;" maxlength="3" placeholder="C" autocomplete="off" autocomplete="off">
+                      </td>
+                      <td>
+                        <input type="text" id="side0ev4" style="width:28px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=0;" onBlur="focusingStatSide=-1;" maxlength="3" placeholder="D" autocomplete="off" autocomplete="off">
+                      </td>
+                      <td>
+                        <input type="text" id="side0ev5" style="width:28px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=0;" onBlur="focusingStatSide=-1;" maxlength="3" placeholder="S" autocomplete="off" autocomplete="off">
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <table border="0">
+                  <tr>
+                    <td>
+                      <div class="dropdown">
+                        <a data-toggle="dropdown" href="#" tabindex="6" class="boostButton"><div class="boostButton">Boosts:</div></a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                          <li class="dropdown-submenu">
+                            <a tabindex="-1" href="javascript:toggleConds(0,getFocusingPokemon(0).aBoost+13+1)">Atk Increase</a>
+                            <ul class="dropdown-menu">
+                              <li><a tabindex="-1" href="javascript:toggleConds(0,14)">+1</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(0,15)">+2</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(0,16)">+3</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(0,17)">+4</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(0,18)">+5</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(0,19)">+6</a></li>
+                            </ul>
+                          </li>
+                          <li class="dropdown-submenu">
+                            <a tabindex="-1" href="javascript:toggleConds(0,getFocusingPokemon(0).aBoost+13-1)">Atk Decrease</a>
+                            <ul class="dropdown-menu">
+                              <li><a tabindex="-1" href="javascript:toggleConds(0,12)">-1</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(0,11)">-2</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(0,10)">-3</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(0,9)">-4</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(0,8)">-5</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(0,7)">-6</a></li>
+                            </ul>
+                          </li>
+                          <li class="dropdown-submenu">
+                            <a tabindex="-1" href="javascript:toggleConds(0,getFocusingPokemon(0).dBoost+26+1)">Def Increase</a>
+                            <ul class="dropdown-menu">
+                              <li><a tabindex="-1" href="javascript:toggleConds(0,27)">+1</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(0,28)">+2</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(0,29)">+3</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(0,20)">+4</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(0,31)">+5</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(0,32)">+6</a></li>
+                            </ul>
+                          </li>
+                          <li class="dropdown-submenu">
+                            <a tabindex="-1" href="javascript:toggleConds(0,getFocusingPokemon(0).dBoost+26-1)">Def Decrease</a>
+                            <ul class="dropdown-menu">
+                              <li><a tabindex="-1" href="javascript:toggleConds(0,25)">-1</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(0,24)">-2</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(0,23)">-3</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(0,22)">-4</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(0,21)">-5</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(0,20)">-6</a></li>
+                            </ul>
+                          </li>
+                          <li class="divider"></li>
+                          <li><a tabindex="-1" href="javascript:toggleConds(0,1);">Burn</a></li>
+                          <li><a tabindex="-1" href="javascript:toggleConds(0,5);">Light Screen</a></li>
+                          <li><a tabindex="-1" href="javascript:toggleConds(0,6);">Reflect</a></li>
+                        </ul>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="label label-inverse" style="display:none;cursor:pointer" id="side0cond1" onClick="toggleConds(0,1)">Burn</span>
+                      <span class="label label-inverse" style="display:none;cursor:pointer" id="side0cond3" onClick="toggleConds(0,13)">Atk+1</span>
+                      <span class="label label-inverse" style="display:none;cursor:pointer" id="side0cond4" onClick="toggleConds(0,26)">Def+1</span>
+                      <span class="label label-info"    style="display:none;cursor:pointer" id="side0cond5" onClick="toggleConds(0,5)">Light Screen</span>
+                      <span class="label label-info"    style="display:none;cursor:pointer" id="side0cond6" onClick="toggleConds(0,6)">Reflect</span>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                <div id="side0stats" align="right" style="display:none">
+                  <table border="0">
+                    <tr>
+                      <td width="120px">
+                        <span id="side0type">Fire/Water</span><br>
+                      </td>
+                      <td>
+                        <table border="0">
+                          <tr>
+                            <td>
+                              <br>
+                            </td>
+                            <td class="basestattd">H</td>
+                            <td class="basestattd">A</td>
+                            <td class="basestattd">B</td>
+                            <td class="basestattd">C</td>
+                            <td class="basestattd">D</td>
+                            <td class="basestattd">S</td>
+                          <tr>
+                            <td>
+                              Base:
+                            </td>
+                            <td class="basestattd"><div id="side0basestat0" class="labelContainer70">0</div></td>
+                            <td class="basestattd"><div id="side0basestat1" class="labelContainer70">0</div></td>
+                            <td class="basestattd"><div id="side0basestat2" class="labelContainer70">0</div></td>
+                            <td class="basestattd"><div id="side0basestat3" class="labelContainer70">0</div></td>
+                            <td class="basestattd"><div id="side0basestat4" class="labelContainer70">0</div></td>
+                            <td class="basestattd"><div id="side0basestat5" class="labelContainer70">0</div></td>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              Stats:
+                            </td>
+                            <td class="basestattd"><div id="side0stat0" class="labelContainer70">0</div></td>
+                            <td class="basestattd"><div id="side0stat1" class="labelContainer70">0</div></td>
+                            <td class="basestattd"><div id="side0stat2" class="labelContainer70">0</div></td>
+                            <td class="basestattd"><div id="side0stat3" class="labelContainer70">0</div></td>
+                            <td class="basestattd"><div id="side0stat4" class="labelContainer70">0</div></td>
+                            <td class="basestattd"><div id="side0stat5" class="labelContainer70">0</div></td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <!-- /side0stats -->
+      </div>
+      <div id="movechoice" class="triangle-isosceles" align="center">
+        <script type="text/javascript"><!--
+          document.write('<table border="0"><tbody>');
+          for(var i=0; i<2; i++){
+            document.write('<tr>');
+            for(var j=0;j<2;j++){
+              id = 'move' + (i*2+j);
+              document.write('<td id="' + id + 'td" style="padding-top:5px; width:150px; height:50px;" align="center" valign="top" onClick="focusOnMove(' + (i*2+j) + ')"><div class="focusedMove" id="' + id + 'div">');
+              document.write('<input type="text" name="' + id + 'text" id="' + id + 'text" class="span2" autocomplete="off" style="width:120px" onFocus="focusOnMove(' + (i*2+j) + ');focusingStatSide=focusingSide;" onBlur="focusingStatSide=-1;" placeholder="Move ' + (i*2+j+1) + '" data-provide="typeahead"></div></td>');
+            }
+            document.write('</tr>');
+          }
+          document.write('</tbody></table>');
+        --></script>
+      </div>
+      <div class="sideContainer" id="side1container">
+        <div id="side1name" onClick="focusOnPoke(1,focusingPoke[1])">
+          <input type="text" class="span2" data-provide="typeahead" id="side1nametext" size="10" maxlength="12" autocomplete="off" onFocus="focusOnSide(1);focusingStatSide=1;" onBlur="focusingStatSide=-1;" onKeyDown="captureTab(1,event.keyCode,event.shiftKey)" placeholder="Pokemon Name" tabindex="5">
+        </div>
+        <!-- side1stats -->
+        <div>
+          <table border="0">
+            <tr>
+              <td>
+                <table border="0">
+                  <tr>
+                    <td>
+                      <div class="labelContainer">
+                        Nat:
+                      </div>
+                    </td>
+                    <td>
+                      <div class="dropup">
+                        <input type="text" class="dropdown-toggle" data-toggle="dropdown" href="#" placeholder="No Bias" style="width: 110px" id="side1naturetext" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=1;" onBlur="focusingStatSide=-1;" autocomplete="off">
+                          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                            <li><a tabindex="-1" href="javascript:chooseNature(1,30);"><span class="badge badge-important">+</span> + Increase</a></li>
+                            <li><a tabindex="-1" href="javascript:chooseNature(1,31);"><span class="badge badge-info">−</span> - Decrease</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-submenu">
+                              <a tabindex="-1" href="javascript:chooseNature(1,25);"><span class="badge Aup">A+</span> Atk Increase</a>
+                              <ul class="dropdown-menu">
+                                <script type="text/javascript"><!--
+                                for(var i=0; i<=4; i++){
+                                  document.write('<li><a tabindex="-1" href="javascript:chooseNature(1,' + i + ');"><span class="badge ' + statNames[i%5+1] + 'down">' + statNames[i%5+1] + '-</span> ' + natureNames[i] + '</a></li>');                                
+                                }
+                                --></script>
+                              </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                              <a tabindex="-1" href="javascript:chooseNature(1,26);"><span class="badge Bup">B+</span> Def Increase</a>
+                              <ul class="dropdown-menu">
+                                <script type="text/javascript"><!--
+                                for(var i=5; i<=9; i++){
+                                  document.write('<li><a tabindex="-1" href="javascript:chooseNature(1,' + i + ');"><span class="badge ' + statNames[i%5+1] + 'down">' + statNames[i%5+1] + '-</span> ' + natureNames[i] + '</a></li>');                                
+                                }
+                                --></script>
+                              </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                              <a tabindex="-1" href="javascript:chooseNature(1,27);"><span class="badge Cup">C+</span> SAtk Increase</a>
+                              <ul class="dropdown-menu">
+                                <script type="text/javascript"><!--
+                                for(var i=10; i<=14; i++){
+                                  document.write('<li><a tabindex="-1" href="javascript:chooseNature(1,' + i + ');"><span class="badge ' + statNames[i%5+1] + 'down">' + statNames[i%5+1] + '-</span> ' + natureNames[i] + '</a></li>');                                
+                                }
+                                --></script>
+                              </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                              <a tabindex="-1" href="javascript:chooseNature(1,28);"><span class="badge Dup">D+</span> SDef Increase</a>
+                              <ul class="dropdown-menu">
+                                <script type="text/javascript"><!--
+                                for(var i=15; i<=19; i++){
+                                  document.write('<li><a tabindex="-1" href="javascript:chooseNature(1,' + i + ');"><span class="badge ' + statNames[i%5+1] + 'down">' + statNames[i%5+1] + '-</span> ' + natureNames[i] + '</a></li>');                                
+                                }
+                                --></script>
+                              </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                              <a tabindex="-1" href="javascript:chooseNature(1,29);"><span class="badge Sup">S+</span> Spd Increase</a>
+                              <ul class="dropdown-menu">
+                                <script type="text/javascript"><!--
+                                for(var i=20; i<=24; i++){
+                                  document.write('<li><a tabindex="-1" href="javascript:chooseNature(1,' + i + ');"><span class="badge ' + statNames[i%5+1] + 'down">' + statNames[i%5+1] + '-</span> ' + natureNames[i] + '</a></li>');                                
+                                }
+                                --></script>
+                              </ul>
+                            </li>
+                          </ul>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="labelContainer">
+                        Abl:
+                      </div>
+                    </td>
+                    <td>
+                      <div class="dropup">
+                        <input type="text" class="dropdown-toggle" data-toggle="dropdown" href="#" placeholder="None" style="width: 110px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=1;" onBlur="focusingStatSide=-1;" id="side1abilitytext" autocomplete="off">
+                          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                            <li><a tabindex="-1" href="javascript:chooseAbility(1,0);"><span class="badge badge-important">1</span> <span id="side1ability0">MissingNo</span></a></li>
+                            <li><a tabindex="-1" href="javascript:chooseAbility(1,1);"><span class="badge badge-warning">2</span> <span id="side1ability1">MissingNo</span></a></li>
+                            <li><a tabindex="-1" href="javascript:chooseAbility(1,2);"><span class="badge badge-inverse">H</span> <span id="side1ability2">MissingNo</span></a></li>
+                          </ul>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="labelContainer">
+                        Item:
+                      </div>
+                    </td>
+                    <td>
+                      <div class="dropup">
+                        <input type="text" class="dropdown-toggle" data-toggle="dropdown" href="#" placeholder="None" style="width: 110px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=0;" onBlur="focusingStatSide=-1;" id="side1itemtext" autocomplete="off">
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                          <script type="text/javascript"><!--
+                          for(var i=2; i<=7; i++){
+                            document.write('<li><a tabindex="-1" href="javascript:chooseItem(1,' + i + ');">' + itemNames[i] + '</a></li>');
+                          }
+                          --></script>
+                          <li class="dropdown-submenu">
+                            <a tabindex="-1" href="javascript:chooseItem(1,76);">Metronome</a>
+                            <ul class="dropdown-menu">
+                              <script type="text/javascript"><!--
+                              for(var i=0; i<=5; i++){
+                                document.write('<li><a tabindex="-1" href="javascript:chooseItem(1,' + (76+i) + ');">' + i + (i==5 ? '+' : '') + '</a></li>');
+                              }
+                              --></script>
+                            </ul>
+                          </li>
+                          <li class="divider"></li>
+                          <li class="dropdown-submenu">
+                            <a tabindex="-1" href="javascript:chooseItem(1,15);">Damage Reduction Berry</a>
+                            <ul class="dropdown-menu">
+                              <script type="text/javascript"><!--
+                              for(var i=1; i<typeNames.length-2; i++){
+                                document.write('<li><a tabindex="-1" href="javascript:chooseItem(1,' + (58+i) + ');">' + typeNames[i] + '</a></li>');
+                              }
+                              --></script>
+                            </ul>
+                          </li>
+                          <li><a tabindex="-1" href="javascript:chooseItem(1,16)">Eviolite<small>(*active on all)</small></a></li>
+                          <li><a tabindex="-1" href="javascript:chooseItem(1,8);">Special Item<small>(*ex. Sowl Dew)</small></a></li>
+                          <li class="divider"></li>
+                          <li class="dropdown-submenu">
+                            <a tabindex="-1" href="javascript:chooseItem(1,0);">Boosting Plates</a>
+                            <ul class="dropdown-menu">
+                              <script type="text/javascript"><!--
+                              for(var i=1; i<typeNames.length-2; i++){
+                                document.write('<li><a tabindex="-1" href="javascript:chooseItem(1,' + (40+i) + ');">' + typeNames[i] + '</a></li>');
+                              }
+                              --></script>
+                            </ul>
+                          </li>
+                          <li class="dropdown-submenu">
+                            <a tabindex="-1" href="javascript:chooseItem(1,1);">Boosting Gems</a>
+                            <ul class="dropdown-menu">
+                              <script type="text/javascript"><!--
+                              for(var i=0; i<typeNames.length-2; i++){
+                                document.write('<li><a tabindex="-1" href="javascript:chooseItem(1,' + (23+i) + ');">' + typeNames[i] + '</a></li>');
+                              }
+                              --></script>
+                            </ul>
+                          </li>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td width="10px">
+                <br>
+              </td>
+              <td>
+                <div>
+                  <table border="0">
+                    <tr>
+                      <td>
+                        <input type="text" id="side1iv0" style="width:28px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=1;" onBlur="focusingStatSide=-1;" maxlength="2" placeholder="H" value="31" autocomplete="off">
+                      </td>
+                      <td>
+                        <input type="text" id="side1iv1" style="width:28px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=1;" onBlur="focusingStatSide=-1;" maxlength="2" placeholder="A" value="31" autocomplete="off" autocomplete="off">
+                      </td>
+                      <td>
+                        <input type="text" id="side1iv2" style="width:28px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=1;" onBlur="focusingStatSide=-1;" maxlength="2" placeholder="B" value="31" autocomplete="off" autocomplete="off">
+                      </td>
+                      <td>
+                        <input type="text" id="side1iv3" style="width:28px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=1;" onBlur="focusingStatSide=-1;" maxlength="2" placeholder="C" value="31" autocomplete="off" autocomplete="off">
+                      </td>
+                      <td>
+                        <input type="text" id="side1iv4" style="width:28px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=1;" onBlur="focusingStatSide=-1;" maxlength="2" placeholder="D" value="31" autocomplete="off" autocomplete="off">
+                      </td>
+                      <td>
+                        <input type="text" id="side1iv5" style="width:28px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=1;" onBlur="focusingStatSide=-1;" maxlength="2" placeholder="S" value="31" autocomplete="off" autocomplete="off">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <input type="text" id="side1ev0" style="width:28px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=1;" onBlur="focusingStatSide=-1;" maxlength="3" placeholder="H" autocomplete="off">
+                      </td>
+                      <td>
+                        <input type="text" id="side1ev1" style="width:28px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=1;" onBlur="focusingStatSide=-1;" maxlength="3" placeholder="A" autocomplete="off" autocomplete="off">
+                      </td>
+                      <td>
+                        <input type="text" id="side1ev2" style="width:28px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=1;" onBlur="focusingStatSide=-1;" maxlength="3" placeholder="B" autocomplete="off" autocomplete="off">
+                      </td>
+                      <td>
+                        <input type="text" id="side1ev3" style="width:28px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=1;" onBlur="focusingStatSide=-1;" maxlength="3" placeholder="C" autocomplete="off" autocomplete="off">
+                      </td>
+                      <td>
+                        <input type="text" id="side1ev4" style="width:28px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=1;" onBlur="focusingStatSide=-1;" maxlength="3" placeholder="D" autocomplete="off" autocomplete="off">
+                      </td>
+                      <td>
+                        <input type="text" id="side1ev5" style="width:28px" onClick="this.select(0,this.value.length);" onFocus="focusingStatSide=1;" onBlur="focusingStatSide=-1;" maxlength="3" placeholder="S" autocomplete="off" autocomplete="off">
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <table border="0">
+                  <tr>
+                    <td>
+                      <div class="dropup">
+                        <a data-toggle="dropdown" href="#" tabindex="6" class="boostButton"><div class="boostButton">Boosts:</div></a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                          <li class="dropdown-submenu">
+                            <a tabindex="-1" href="javascript:toggleConds(1,getFocusingPokemon(1).aBoost+13+1)">Atk. Increase</a>
+                            <ul class="dropdown-menu">
+                              <li><a tabindex="-1" href="javascript:toggleConds(1,14)">+1</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(1,15)">+2</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(1,16)">+3</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(1,17)">+4</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(1,18)">+5</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(1,19)">+6</a></li>
+                            </ul>
+                          </li>
+                          <li class="dropdown-submenu">
+                            <a tabindex="-1" href="javascript:toggleConds(1,getFocusingPokemon(1).aBoost+13-1)">Atk. Decrease</a>
+                            <ul class="dropdown-menu">
+                              <li><a tabindex="-1" href="javascript:toggleConds(1,12)">-1</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(1,11)">-2</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(1,10)">-3</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(1,9)">-4</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(1,8)">-5</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(1,7)">-6</a></li>
+                            </ul>
+                          </li>
+                          <li class="dropdown-submenu">
+                            <a tabindex="-1" href="javascript:toggleConds(1,getFocusingPokemon(1).aBoost+26+1)">Def. Increase</a>
+                            <ul class="dropdown-menu">
+                              <li><a tabindex="-1" href="javascript:toggleConds(1,27)">+1</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(1,28)">+2</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(1,29)">+3</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(1,20)">+4</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(1,31)">+5</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(1,32)">+6</a></li>
+                            </ul>
+                          </li>
+                          <li class="dropdown-submenu">
+                            <a tabindex="-1" href="javascript:toggleConds(1,getFocusingPokemon(1).aBoost+26-1)">Def. Decrease</a>
+                            <ul class="dropdown-menu">
+                              <li><a tabindex="-1" href="javascript:toggleConds(1,25)">-1</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(1,24)">-2</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(1,23)">-3</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(1,22)">-4</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(1,21)">-5</a></li>
+                              <li><a tabindex="-1" href="javascript:toggleConds(1,20)">-6</a></li>
+                            </ul>
+                          </li>
+                          <li class="divider"></li>
+                          <li><a tabindex="-1" href="javascript:toggleConds(1,1);">Burn</a></li>
+                          <li><a tabindex="-1" href="javascript:toggleConds(1,5);">Light Screen</a></li>
+                          <li><a tabindex="-1" href="javascript:toggleConds(1,6);">Reflect</a></li>
+                        </ul>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="label label-inverse" style="display:none;cursor:pointer" id="side1cond1" onClick="toggleConds(1,1)">Burn</span>
+                      <span class="label label-inverse" style="display:none;cursor:pointer" id="side1cond3" onClick="toggleConds(1,13)">Atk +2</span>
+                      <span class="label label-inverse" style="display:none;cursor:pointer" id="side1cond4" onClick="toggleConds(1,26)">Def +1</span>
+                      <span class="label label-info"    style="display:none;cursor:pointer" id="side1cond5" onClick="toggleConds(1,5)">Light Screen</span>
+                      <span class="label label-info"    style="display:none;cursor:pointer" id="side1cond6" onClick="toggleConds(1,6)">Reflect</span>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                <div id="side1stats" align="right" style="display:none">
+                  <table border="0">
+                    <tr>
+                      <td width="120px">
+                        <span id="side1type">Fire/Water</span><br>
+                      </td>
+                      <td>
+                        <table border="0">
+                          <tr>
+                            <td>
+                              <br>
+                            </td>
+                            <td class="basestattd">H</td>
+                            <td class="basestattd">A</td>
+                            <td class="basestattd">B</td>
+                            <td class="basestattd">C</td>
+                            <td class="basestattd">D</td>
+                            <td class="basestattd">S</td>
+                          <tr>
+                            <td>
+                              Base:
+                            </td>
+                            <td class="basestattd"><div id="side1basestat0" class="labelContainer70">0</div></td>
+                            <td class="basestattd"><div id="side1basestat1" class="labelContainer70">0</div></td>
+                            <td class="basestattd"><div id="side1basestat2" class="labelContainer70">0</div></td>
+                            <td class="basestattd"><div id="side1basestat3" class="labelContainer70">0</div></td>
+                            <td class="basestattd"><div id="side1basestat4" class="labelContainer70">0</div></td>
+                            <td class="basestattd"><div id="side1basestat5" class="labelContainer70">0</div></td>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              Stats:
+                            </td>
+                            <td class="basestattd"><div id="side1stat0" class="labelContainer70">0</div></td>
+                            <td class="basestattd"><div id="side1stat1" class="labelContainer70">0</div></td>
+                            <td class="basestattd"><div id="side1stat2" class="labelContainer70">0</div></td>
+                            <td class="basestattd"><div id="side1stat3" class="labelContainer70">0</div></td>
+                            <td class="basestattd"><div id="side1stat4" class="labelContainer70">0</div></td>
+                            <td class="basestattd"><div id="side1stat5" class="labelContainer70">0</div></td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <!-- side1stats -->
+      </div>
+      <table border="0">
+        <tr>
+          <td>
+            <div class="pagination">
+              <ul>
+                <li><a id="side1poke0" onClick="focusOnPoke(1,0)"><img src="./image/pokeball.png" id="side1poke0icon" tabindex="4"></a></li>
+                <script type="text/javascript"><!--
+                for(var i=1;i<6;i++){
+                  var id = "side1poke" + i;
+                  var iconId = id + 'icon';
+                  document.write('<li><a id="' + id + '" onClick="focusOnPoke(1,' + i + ')"><img src="./image/pokeball.png" id="' + iconId + '"></a></li>')            
+                }
+                --></script>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="powerButton" onClick="toggleStats(1);return false;" onMouseOver="this.className='powerButtonHover'" onMouseOut="this.className='powerButton'"><img src="./image/powerweight.png" style="margin-top:5px"></div>
+          </td>
+        </tr>
+      </table>
+      <input type="submit" class="btn" value="Calculate">
+      <br>
+      <br>
+      <div class="conditionDiv">
+        <table border="0">
+          <tr>
+            <td>
+              <input type="checkbox" id="isCritical"> <span onClick="checkCond(0);">Critical</span><br>
+              <input type="checkbox" id="isHelpingHand"> <span onClick="checkCond(0);">Helping Hand</span><br>
+              <input type="checkbox" id="isDoubleBattle"> <span onClick="checkCond(0);">Double Battle</span><br>
+              <input type="radio" name="level" checked="checked"> <span onClick="checkCond(0);">Lv.50</span><br>
+              <input type="radio" name="level"> <span onClick="checkCond(0);">Lv.100</span><br>
+            </td>
+            <td width="20px">
+              <br>
+            </td>
+            <td>
+              <input type="radio" name="weather" id="weather0" onClick="changeWeather(0);" checked="checked"> Default<br>
+              <input type="radio" name="weather" id="weather1" onClick="changeWeather(1);"> Strong Sunlight<br>
+              <input type="radio" name="weather" id="weather2" onClick="changeWeather(2);"> Rain<br>
+              <input type="radio" name="weather" id="weather3" onClick="changeWeather(3);"> Sandstorm<br>
+              <input type="radio" name="weather" id="weather4" onClick="changeWeather(4);"> Hail<br>
+            </td>
+          </tr>
+        </table>
+      </div>
+      </form>
+    </div><!-- input -->
+
+
+    <div class="spacerDiv">
+      <br>
+    </div>
+
+
+    <!-- Output -->
+    <div class="outputDiv">
+      <br>
+      <br>
+      <div id="resultViewContainer0" class="resultViewContainer">
+        <table border="0" id="resultView0">
+          <tr>
+            <td width="30px" class="outputButton" align="center">
+              <br>
+            </td>            
+            <td>
+              <table border="0">
+                <tr>
+                  <td>
+                    <br>
+                  </td>
+                  <td width="10px">
+                    <br>
+                  </td>
+                  <td>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                <div class="hpBarBorder" style="visibility:hidden">
+                <div class="progress customProgress" align="center">
+                <div class="bar bar-success" style="width: 100%;margin:0px;"></div>
+                <div class="bar bar-success" style="width: 0%; opacity:0.5;margin:0px;"></div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="resultViewContainer1" class="resultViewContainer">
+        <table border="0" id="resultView1">
+          <tr>
+            <td width="30px" class="outputButton" align="center">
+              <br>
+            </td>            
+            <td>
+              <table border="0">
+                <tr>
+                  <td>
+                    <br>
+                  </td>
+                  <td width="10px">
+                    <br>
+                  </td>
+                  <td>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                <div class="hpBarBorder" style="visibility:hidden">
+                <div class="progress customProgress" align="center">
+                <div class="bar bar-success" style="width: 100%;margin:0px;"></div>
+                <div class="bar bar-success" style="width: 0%; opacity:0.5;margin:0px;"></div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="resultViewContainer2" class="resultViewContainer">
+        <table border="0" id="resultView2">
+          <tr>
+            <td width="30px" class="outputButton" align="center">
+              <br>
+            </td>            
+            <td>
+              <table border="0">
+                <tr>
+                  <td>
+                    <br>
+                  </td>
+                  <td width="10px">
+                    <br>
+                  </td>
+                  <td>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                <div class="hpBarBorder" style="visibility:hidden">
+                <div class="progress customProgress" align="center">
+                <div class="bar bar-success" style="width: 100%;margin:0px;"></div>
+                <div class="bar bar-success" style="width: 0%; opacity:0.5;margin:0px;"></div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="resultViewContainer3" class="resultViewContainer">
+        <table border="0" id="resultView3">
+          <tr>
+            <td width="30px" class="outputButton" align="center">
+              <br>
+            </td>            
+            <td>
+              <table border="0">
+                <tr>
+                  <td>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                <div class="hpBarBorder" style="visibility:hidden">
+                <div class="progress customProgress" align="center">
+                <div class="bar bar-success" style="width: 100%;margin:0px;"></div>
+                <div class="bar bar-success" style="width: 0%; opacity:0.5;margin:0px;"></div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div style="height:10px"> </div>
+      <div class="sideContainer unFocused" style="padding-bottom:5px" width="300px" align="center">
+        Currently working on export with PO/PS Format. (Importing is OK)<br>
+        <button class="btn" onClick="printParty(0)">Export Upper Party</button>
+        <button class="btn" onClick="printParty(1)">Export Lower Party</button>
+        <br>
+        <textarea id="partyText" rows="3" style="width:300px;margin-top:6px;margin-bottom:6px" onClick="this.select(0,this.value.length);"></textarea>
+        <br>
+        <button class="btn" onClick="setParty(0)">Import to Upper Party</button>
+        <button class="btn" onClick="setParty(1)">Import to Lower Party</button>
+      </div>
+      <div style="height:10px"> </div>
+      <div class="sideContainer unFocused" align="center">
+        Bug Reports, comments are always welcome. <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://sanavoir.com/criticalhit/en.html" data-text="Critical Hit - Pokemon Damage Calculation Tool" data-via="SanaVoir">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script><br>
+        Coded by <a href="https://twitter.com/SanaVoir" target="_blank">SanaVoir</a> (2013).<br>
+        Special Thanks to <a href="http://www.smogon.com/bw/articles/bw_complete_damage_formula">Smogon University</a> for the algorithm.<br>
+        Pokémon is a copyright of Pokemon Inc.
+      </div>
+
+
+      <div style="height:10px"> </div>
+    </div> <!-- /Output -->
+  </div> <!-- /container -->
+  <script charset="UTF-8" src="js/lang/initTypeaheadEn.js" type="text/javascript"></script>
+  <script type="text/javascript"><!--
+  init();
+  --></script>
+</body>
+</html>

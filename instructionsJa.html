@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+<meta name="keyword" content="ポケモン,ダメージ,ダメージ計算,BW2,ポケモンXY">
+<title>Critical Hitの使い方</title>
+<!-- Bootstrap -->
+<script src="./js/jquery.min.js" type="text/javascript"></script>
+<script src="./bootstrap/js/bootstrap.min.js"></script>
+<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="./bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+<!-- Critical Hit -->
+<link href="./css/ui.css" rel="stylesheet">
+</head>
+<body>
+  <div class="navbar navbar-inverse navbar-static-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="brand" href="./index.html">Critical Hit β</a>
+        <ul class="nav">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Languages</a>
+            <ul class="dropdown-menu">
+              <li><a href="./instructionsJa.html">日本語</a></li>
+              <li><a href="./instructionsEn.html">English</a></li>
+            </ul>
+          </li>
+          <li class="active"><a href="./instructionsJa.html">使い方</a></li>
+          <li><a href="../index.html">ホーム</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <br>
+    <div class="conditionDiv" style="padding-left:20px">
+      <h3>Critical Hitの使い方</h3>
+      Critical Hitは、<b>最も正確で、臨場感溢れるダメージ計算機</b>を目指した競技ポケモンのダメージ計算機です。<br>
+      <b>対戦中</b>に素早く使うことができ、初心者にもやさしい作りを心がけています。<br>
+      米ポケモンコミュニティ<b>Smogon University</b>の方々が公開して下さっているROM解析の結果を使った正確なツールを作りたいと思い、これを実現させました。<br>
+      ゲーム内にて行われる処理を<b>忠実に実装したエンジン</b>を実装することで、Critical Hitでは正確なダメージを調べることができます。<br>
+      出典:<a href="http://www.smogon.com/bw/articles/bw_complete_damage_formula" target="_blank">The Complete Damage Formula for Black & White</a>
+      <br>
+      <br>
+      製作は<a href="https://twitter.com/SanaVoir" target="_blank">SanaVoir</a>が行なっています。バク報告や感想・ご要望など、是非お寄せ下さい。<br>
+      <br>
+      <h4>基本</h4>
+      <ul>
+        <li><b>Enterキー</b>で入力の反映・ダメージの計算を行います。</li>
+        <li>赤色に点灯している側が、攻撃側です。「ポケモン名」欄をクリックすることで、どちらの側が攻撃するかを選びます。</li>
+        <li><b>「ポケモン名」欄でTabキー/Shift+Tabキー</b>を押すことで、前後のポケモンを選択できます。この機能により、パーティ選出時間中相手のパーティを全て入力しやすくなります。</li>
+      </ul>
+      <h4>積み</h4>
+      <ul>
+        <li>バッジをクリックことで、積みの効果を消去できます。</li>
+      </ul>
+      <h4>パーティ保存</h4>
+      <ul>
+        <li>パーティ入力後、右下の「◯側パーティ出力」ボタンを押し、内容をコピーしメモ帳などに保存しておきます。</li>
+        <li>保存したパーティを呼び出すには、保存した内容を入力欄に貼り付け、「◯側パーティ呼出」を選択します。</li>
+      </ul>
+      <br>
+    </div>
+    <div style="height:10px"> </div>
+    <div class="conditionDiv" align="center">
+      <br>
+      Coded by <a href="https://twitter.com/SanaVoir" target="_blank">SanaVoir</a> (2013).<br>
+      Special Thanks to <a href="http://www.smogon.com/bw/articles/bw_complete_damage_formula">Smogon University</a> for the algorithm.<br>
+      Pokémon is a copyright of Pokemon Inc.
+      <br>
+      <br>
+  </div> <!-- /container -->
+</body>
+</html>
