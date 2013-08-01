@@ -246,8 +246,8 @@ function calculateDamage(aPokemon, dPokemon, resultSlot, randomLevel){
 					!(moveId > 0) ||
 					((moveData[moveId*moveDataLength+8] > 0 && moveData[moveId*moveDataLength+8] <= 6) || moveData[moveId*moveDataLength+8] === 255) ||
 					  moveData[moveId*moveDataLength+15] > 0 ||
-					((moveData[moveId*moveDataLength+1] == 5 || moveData[moveId*moveDataLength+1] == 6) && moveData[moveId*moveDataLength+23] < 0) ||
-					 (moveData[moveId*moveDataLength+1] == 7 && moveData[moveId*moveDataLength+23] > 0)
+					((moveData[moveId*moveDataLength+1] == 5 || moveData[moveId*moveDataLength+1] == 6) && moveData[moveId*moveDataLength+24] < 0) ||
+					 (moveData[moveId*moveDataLength+1] == 7 && moveData[moveId*moveDataLength+24] > 0)
 					):
 					bModifier = cmod(bModifier,5325);					
 				 	break;
