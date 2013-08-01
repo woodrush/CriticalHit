@@ -1,0 +1,404 @@
+div.inputDiv {
+  float: left;
+  width: 470px;
+}
+div.spacerDiv {
+  float: left;
+  width: 20px;
+}
+div.outputDiv {
+  float: left;
+}
+img {
+  margin:0px;
+}
+.boostButton{
+  width: 60px;
+  height:26px;
+  margin-bottom:5px;
+  -webkit-border-radius:4px;
+  -moz-border-radius:4px;
+  border-radius:4px;
+  background:-webkit-gradient(linear, 0 0, 0 100%, from(#eeeeee), to(#aaaaaa));
+  background:-moz-linear-gradient(#eeeeee, #aaaaaa);
+  background:-o-linear-gradient(#eeeeee, #aaaaaa);
+  background:linear-gradient(#eeeeee, #aaaaaa);
+  text-align: center;
+  vertical-align: center;
+}
+a.boostButton{
+  color:#000000;
+}
+.customProgress{
+  margin-bottom:0px;
+  height:10px;
+  -webkit-border-radius:0px;
+  -moz-border-radius:0px;
+  border-radius:0px;
+  width:310px;
+}
+.hpBarBorder{
+  -webkit-border-radius:6px;
+  -moz-border-radius:6px;
+  border-radius:6px;
+  background:#3a3a3a;
+  width: 310px;
+  height: 12px;
+  padding:4px 12px 2px 12px;
+}
+.focused {
+  background:-webkit-gradient(linear, 0 0, 0 100%, from(#f04349), to(#c81e2b));
+  background:-moz-linear-gradient(#f04349, #c81e2b);
+  background:-o-linear-gradient(#f04349, #c81e2b);
+  background:linear-gradient(#f04349, #c81e2b);
+/*
+  background:-webkit-gradient(linear, 0 0, 0 100%, from(#f9d835), to(#f3961c));
+  background:-moz-linear-gradient(#f9d835, #f3961c);
+  background:-o-linear-gradient(#f9d835, #f3961c);
+  background:linear-gradient(#f9d835, #f3961c);
+*/
+}
+.unFocused{
+  background:url(../image/opacity50.png);  
+}
+div.sideContainer {
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+  padding-top: 5px;
+}
+div.nameContainer0 {
+  -webkit-border-radius:0px 0px 10px 10px;
+  -moz-border-radius:0px 0px 10px 10px;
+  border-radius:0px 0px 10px 10px;
+  padding-top: 5px;
+}
+div.nameContainer1 {
+  -webkit-border-radius:10px 10px 0px 0px;
+  -moz-border-radius:10px 10px 0px 0px;
+  border-radius:10px 10px 0px 0px;
+  padding-top: 5px;
+}
+div.statContainer0 {
+  -webkit-border-radius:10px 10px 0px 0px;
+  -moz-border-radius:10px 10px 0px 0px;
+  border-radius:10px 10px 0px 0px;
+  padding-top: 5px;
+  padding-left:10px;
+  padding-right:10px;
+
+  background:url(../image/opacity50.png);
+}
+div.statContainer1 {
+  -webkit-border-radius:0px 0px 10px 10px;
+  -moz-border-radius:0px 0px 10px 10px;
+  border-radius:0px 0px 10px 10px;
+  padding-top: 5px;
+  padding-left:10px;
+  padding-right:10px;
+
+  background:url(../image/opacity50.png);
+}
+.labelContainer{
+  background:url(../image/opacity50.png);
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+  border-radius:5px;
+  padding:2px;
+  margin-bottom:6px;
+  width:35px;
+  text-align:right;
+}
+.labelContainer2{
+  background:url(../image/opacity50.png);
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+  border-radius:5px;
+  padding:2px;
+  margin-bottom:6px;
+  width:50px;
+  text-align:right;
+}
+.labelContainer70{
+  background:url(../image/opacity70.png);
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+  border-radius:5px;
+  padding:2px;
+  margin-bottom:6px;
+  width:35px;
+  text-align:right;
+}
+.labelContainer100{
+  background:#ffffff;
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+  border-radius:5px;
+  padding:2px;
+  margin-bottom:6px;
+  width:35px;
+  text-align:right;
+}
+div.side0name {
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+  padding-top: 5px;
+  /*border: 1px solid;*/
+}
+div.side1name {
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+  padding-top: 5px;
+  /*border: 1px solid;*/
+}
+div.conditionDiv {
+  margin-top:5px;
+  margin-bottom:5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+  background:url(../image/opacity70.png);
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+}
+td.outputButton {
+/*  padding-left: 10px;
+  padding-right: 10px;
+*/
+  width:95px;
+}
+div.resultViewContainer{
+  background:url(../image/opacity70.png);
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+
+  padding-right:10px;
+  padding-left:0px;
+  margin-bottom:10px;
+}
+div.resultViewContainerFocused{
+  background:url(../image/opacity70.png);
+/*
+  background:-webkit-gradient(linear, 0 0, 0 100%, from(#f9d835), to(#f3961c));
+  background:-moz-linear-gradient(#f9d835, #f3961c);
+  background:-o-linear-gradient(#f9d835, #f3961c);
+  background:linear-gradient(#f9d835, #f3961c);
+*/
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+
+  padding-right:10px;
+  padding-left:0px;
+  margin-bottom:10px;
+}
+
+.powerButton{
+  width:60px;
+  height:42px;
+  margin-top:15px;
+  margin-bottom:20px;
+  -webkit-border-radius:4px;
+  -moz-border-radius:4px;
+  border-radius:4px;
+  background:-webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#cccccc));
+  background:-moz-linear-gradient(#ffffff, #cccccc);
+  background:-o-linear-gradient(#ffffff, #cccccc);
+  background:linear-gradient(#ffffff, #cccccc);
+  text-align: center;
+  vertical-align: center;
+  cursor:pointer;
+}
+.powerButtonHover{
+  width:60px;
+  height:42px;
+  margin-top:15px;
+  margin-bottom:20px;
+  -webkit-border-radius:4px;
+  -moz-border-radius:4px;
+  border-radius:4px;
+  background:#dddddd;
+  text-align: center;
+  vertical-align: center;
+  cursor:pointer;
+}
+
+/*--------------------------------------------------------------*/
+div.pokemonDetailsContainer{
+  margin-top:0px;
+  padding-top:5px;
+  padding-bottom:5px;
+  background:url(../image/opacity50.png);
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+  border-radius:5px;
+  padding-left:10px;
+  padding-right:10px;
+  margin-bottom:6px;
+}
+td.basestattd{
+  width:35px;
+  text-align: center;
+}
+/*--------------------------------------------------------------*/
+span.Hup {
+  background-color:#78BD42;
+}
+span.Aup {
+  background-color:#E35352;
+}
+span.Bup {
+  background-color:#568CE4;
+}
+span.Cup {
+  background-color:#83E3EC;
+}
+span.Dup {
+  background-color:#C478D6;
+}
+span.Sup {
+  background-color:#72B5B6;
+}
+span.Hdown {
+  background-color:#78BD42;
+}
+span.Adown {
+  background-color:#E35352;
+}
+span.Bdown {
+  background-color:#568CE4;
+}
+span.Cdown {
+  background-color:#83E3EC;
+}
+span.Ddown {
+  background-color:#C478D6;
+}
+span.Sdown {
+  background-color:#72B5B6;
+}
+
+div.triangle-isosceles {
+  position:relative;
+  padding:15px;
+  margin:15px 0 15px;
+  color:#000;
+  background:#f3961c; /* default background for browsers without gradient support */
+  /* css3 */
+  background:-webkit-gradient(linear, 0 0, 0 100%, from(#c81e2b), to(#f04349));
+  background:-moz-linear-gradient(#c81e2b, #f04349);
+  background:-o-linear-gradient(#c81e2b, #f04349);
+  background:linear-gradient(#c81e2b, #f04349);
+/*
+  background:-webkit-gradient(linear, 0 0, 0 100%, from(#111111), to(#555555));
+  background:-moz-linear-gradient(#111111, #555555);
+  background:-o-linear-gradient(#111111, #555555);
+  background:linear-gradient(#111111, #555555);
+*/
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+}
+/* Variant : for top positioned triangle
+------------------------------------------ */
+
+.triangle-isosceles.top {
+  background:-webkit-gradient(linear, 0 0, 0 100%, from(#f04349), to(#c81e2b));
+  background:-moz-linear-gradient(#f04349, #c81e2b);
+  background:-o-linear-gradient(#f04349, #c81e2b);
+  background:linear-gradient(#f04349, #c81e2b);
+/*
+  background:-webkit-gradient(linear, 0 0, 0 100%, from(#555555), to(#111111));
+  background:-moz-linear-gradient(#555555, #111111);
+  background:-o-linear-gradient(#555555, #111111);
+  background:linear-gradient(#555555, #111111);
+*/
+}
+/* creates triangle */
+div.triangle-isosceles:after {
+  content:"";
+  position:absolute;
+  bottom:-15px; /* value = - border-top-width - border-bottom-width */
+  left:47%; /* controls horizontal position */
+  border-width:15px 15px 0; /* vary these values to change the angle of the vertex */
+  border-style:solid;
+  border-color:#f04349 transparent;
+    /* reduce the damage in FF3.0 */
+    display:block; 
+    width:0;
+}
+/* Variant : top
+------------------------------------------ */
+.triangle-isosceles.top:after {
+  top:-15px; /* value = - border-top-width - border-bottom-width */
+  right:50px; /* controls horizontal position */
+  bottom:auto;
+  border-width:0 15px 15px; /* vary these values to change the angle of the vertex */
+  border-color:#f04349 transparent;
+}
+.focusedMove {
+
+  background:-webkit-gradient(linear, 0 0, 0 100%, from(#f9d835), to(#f3961c));
+  background:-moz-linear-gradient(#f9d835, #f3961c);
+  background:-o-linear-gradient(#f9d835, #f3961c);
+  background:linear-gradient(#f9d835, #f3961c);
+
+/*
+  background:-webkit-gradient(linear, 0 0, 0 100%, from(#f04349), to(#c81e2b));
+  background:-moz-linear-gradient(#f04349, #c81e2b);
+  background:-o-linear-gradient(#f04349, #c81e2b);
+  background:linear-gradient(#f04349, #c81e2b);
+*/
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+  padding-top:5px;
+}
+.notFocusedMove {
+  background:#D82E2B;
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+  padding-top:5px;
+/*  background:url(../image/opacity50.png);
+*/
+}
+a.focusedPokemon {
+/*
+  background:-webkit-gradient(linear, 0 0, 0 100%, from(#f04349), to(#c81e2b));
+  background:-moz-linear-gradient(#f04349, #c81e2b);
+  background:-o-linear-gradient(#f04349, #c81e2b);
+  background:linear-gradient(#f04349, #c81e2b);
+*/
+  background:-webkit-gradient(linear, 0 0, 0 100%, from(#f9d835), to(#f3961c));
+  background:-moz-linear-gradient(#f9d835, #f3961c);
+  background:-o-linear-gradient(#f9d835, #f3961c);
+  background:linear-gradient(#f9d835, #f3961c);
+}
+a.notFocusedPokemon {
+  background:url(../image/opacity50.png);
+}
+a.flashingPokemon {
+  background:-webkit-gradient(linear, 0 0, 0 100%, from(#f9f835), to(#f3b65c));
+  background:-moz-linear-gradient(#f9f835, #f3b65c);
+  background:-o-linear-gradient(#f9f835, #f3b65c);
+  background:linear-gradient(#f9f835, #f3b65c);
+}
+
+
+
+
+body {
+  background: url(../image/normal.jpg) top left no-repeat fixed;
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+div {
+  /*color:white;*/
+}
