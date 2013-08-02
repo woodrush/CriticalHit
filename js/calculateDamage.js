@@ -581,12 +581,10 @@ function calculateDamage(aPokemon, dPokemon, resultSlot, randomLevel){
 				//POSTPONED Metal Burst
 				//POSTPONED Bide
 			}
-
-			// Deal zero damage for uneffective moves
-			if(damageIsZero == true){
-				damage = 0;
-			}
-			break;
+	}
+	// Deal zero damage for uneffective moves
+	if(damageIsZero == true){
+		damage = 0;
 	}
 
 	// Store Results to global object
